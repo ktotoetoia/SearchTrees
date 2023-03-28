@@ -6,6 +6,10 @@
         public AVLNode root { get; private set; }
         public int LastKey { get; private set; }
 
+        public AVLTree()
+        {
+            OnNodeDeleted += UpdateNode;
+        }
 
         //this method needs to not change root node
         private void Swap(AVLNode a,AVLNode b)
@@ -14,24 +18,40 @@
             (a.Value, b.Value) = (b.Value, a.Value);
         }
 
-        public int GetHeight(AVLNode node)
+        private AVLNode Search(AVLNode node, Comparable value)
+        {
+            if (node == null) return null;
+            if (node.Value.CompareTo(value) == 0) return node;
+            return node.Value.CompareTo(value) > 0 ? Search(node.Left, value) : Search(node.Right, value);
+        }
+
+        private int GetHeight(AVLNode node)
         {
             return node == null? -1 : node.Height;
         }
 
-        public void UpdateHeight(AVLNode node)
+        private void UpdateHeight(AVLNode node)
         {
             node.Height = Math.Max(GetHeight(node.Left),GetHeight(node.Right)) + 1;
         }
 
-        public int GetBalance(AVLNode node)
+        private void UpdateNode(AVLNode node)
+        {
+            if (node != null)
+            {
+                UpdateHeight(node);
+                Balance(node);
+            }
+        }
+
+        private int GetBalance(AVLNode node)
         {
             return (node == null) ? 0 : GetHeight(node.Right) - GetHeight(node.Left);
         }
 
-        public void RightRotate(AVLNode node)
+        private void RightRotate(AVLNode node)
         {
-            Swap(node,node.Left);
+            Swap(node, node.Left);
             AVLNode buffer = node.Right;
             node.Right = node.Left;
             node.Left = node.Right.Left;
@@ -42,7 +62,7 @@
             UpdateHeight(node);
         }
 
-        public void LeftRotate(AVLNode node)
+        private void LeftRotate(AVLNode node)
         {
             Swap(node, node.Right);
             AVLNode buffer = node.Left;
@@ -54,21 +74,6 @@
 
             UpdateHeight(node.Left);
             UpdateHeight(node);
-        }
-
-        public void Balance(AVLNode node)
-        {
-            int balance = GetBalance(node);
-            if (balance == -2)
-            {
-                if (GetBalance(node.Left) == 1) LeftRotate(node.Left);
-                RightRotate(node);
-            }
-            else if (balance == 2)
-            {
-                if (GetBalance(node.Right) == -1) RightRotate(node.Right);
-                LeftRotate(node);
-            }
         }
 
         public void Insert(Comparable value)
@@ -86,36 +91,34 @@
             Balance(comparableNode);
         }
 
+        public AVLNode Search(Comparable value)
+        {
+            return Search(root, value);
+        }
+
         public void Delete(int key)
         {
             Delete(root, key);
         }
-        public AVLNode Delete(AVLNode node, int key)
+
+        public AVLNode Delete(Comparable value)
         {
-            if (node == null) return null;
-            if (node.Key < key) node.Left = Delete(node.Left, key);
-            else if (node.Key > key) node.Right = Delete(node.Right, key);
-            else
+            return Delete(root, Search(value).Key);
+        }
+
+        public void Balance(AVLNode node)
+        {
+            int balance = GetBalance(node);
+            if (balance == -2)
             {
-                if (node.Left == null || node.Right == null)
-                {
-                    node = (node.Left == null) ? node.Right : node.Left;
-                }
-                else
-                {
-                    AVLNode leftMax = GetMax(node.Left);
-                    node.Key = leftMax.Key;
-                    node.Value = leftMax.Value;
-                    node.Right = Delete(node.Right, leftMax.Key);
-                    node.Left = null;
-                }
+                if (GetBalance(node.Left) == 1) LeftRotate(node.Left);
+                RightRotate(node);
             }
-            if (node != null)
+            else if (balance == 2)
             {
-                UpdateHeight(node);
-                Balance(node);
+                if (GetBalance(node.Right) == -1) RightRotate(node.Right);
+                LeftRotate(node);
             }
-            return node;
         }
     }
 

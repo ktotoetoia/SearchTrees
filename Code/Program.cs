@@ -11,7 +11,10 @@
             tree.Insert("c");
             tree.Insert("d");
             tree.Insert("e");
-            tree.Delete(1);
+
+            tree.Delete("b");
+            
+            tree.PrintTree(tree.root);
             tree.PrintTreePaths(tree.root);
         }
     }

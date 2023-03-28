@@ -1,9 +1,14 @@
-﻿namespace Trees
+﻿using System;
+
+namespace Trees
 {
     abstract class TreeBase<Node> where Node : NodeBase<Node>
     {
         public Node root { get; protected set; }
         public int LastKey { get; protected set; }
+
+        public delegate void NodeDelegate(Node node);
+        public event NodeDelegate OnNodeDeleted;
 
         public virtual void Insert(Node node, Node comparableNode)
         {
@@ -24,7 +29,7 @@
             }
         }
 
-        public Node Search(Node node, int key)
+        public virtual Node Search(Node node, int key)
         {
             if (node == null) return null;
             if (node.Key == key) return node;
@@ -65,6 +70,8 @@
                     node.Left = null;
                 }
             }
+
+            OnNodeDeleted?.Invoke(node);
 
             return node;
         }
