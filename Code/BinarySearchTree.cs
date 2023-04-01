@@ -23,26 +23,6 @@
         public void PrintTreePaths();
     }
 
-    public interface INode<N>
-    {
-        public IComparable Value { get; set; }
-
-        public N Left { get; set; }
-        public N Right { get; set; }
-    }
-
-    class Node : INode<Node>
-    {
-        public IComparable Value { get; set; }
-        public Node Left { get; set; }
-        public Node Right { get; set; }
-
-        public Node( IComparable value)
-        {
-            Value = value;
-        }
-    }
-
     class BinarySearchTree<type> : ITree<type,Node>, ITreeVizualizer
          where type : IComparable<type>
     {
@@ -51,22 +31,9 @@
         public event ITree<type,Node>.NodeDelegate OnNodeRemoved;
         public event ITree<type,Node>.NodeDelegate OnNodeAdded;
 
-        protected void Add(Node node, Node comparableNode)
+        protected void Add(Node node)
         {
-            if (node.Value.CompareTo(comparableNode.Value) >= 1)
-            {
-                if (comparableNode.Right == null)
-                    comparableNode.Right = node;
-                else
-                    Add(node, comparableNode.Right);
-            }
-            else if (node.Value.CompareTo(comparableNode.Value) < 1)
-            {
-                if (comparableNode.Left == null)
-                    comparableNode.Left = node;
-                else
-                    Add(node, comparableNode.Left);
-            }
+            root.Add(node);
         }
 
         protected Node GetMin(Node node)
@@ -83,19 +50,16 @@
             return GetMax(node.Right);
         }
 
-        protected Node Find(type value, Node currentNode)
+        protected Node Remove(type value, Node node)
         {
-            if (currentNode == null) return null;
-            if (currentNode.Value == (IComparable)value) return currentNode;
-            return currentNode.Value.CompareTo(value) > 1 ? Find(value, currentNode.Left) : Find(value, currentNode.Right);
-        }
-
-        protected Node Delete(type value, Node node)
-        {
-            if (node == null) return null;
-
-            if (node.Value.CompareTo((IComparable)value)>0) node.Left = Delete(value,node.Left);
-            else if (node.Value.CompareTo((IComparable)value) < 0) node.Right = Delete(value,node.Right);
+            if (node.Value.CompareTo((IComparable)value) > 0)
+            {
+                node.Left = Remove(value, node.Left);
+            }
+            else if (node.Value.CompareTo((IComparable)value) < 0)
+            {
+                node.Right = Remove(value, node.Right);
+            }
             else
             {
                 if (node.Left == null || node.Right == null)
@@ -106,33 +70,31 @@
                 {
                     Node leftMax = GetMax(node.Left);
                     node.Value = leftMax.Value;
-                    node.Right = Delete(value,node.Right);
+                    node.Right = Remove(value, node.Right);
                     node.Left = null;
                 }
                 OnNodeRemoved?.Invoke(node);
             }
-
+            
             return node;
         }
-
+        
         public Node Remove(type value)
         {
-            return Delete(value, root);
+            return Remove(value, root);
         }
 
         public Node Find(type value)
         {
-            return Find(value,root);
+            return root.Find((IComparable)value);
         }
 
         public void Add(type value)
         {
             Node node = new Node((IComparable)value);
             if (root == null) root = node;
-            else Add(node, root);
+            else Add(node);
         }
-
-
 
         protected void PrintTree(Node node)
         {
@@ -142,7 +104,7 @@
             PrintTree(node.Right);
         }
 
-        private void PrintTreePaths(Node node)
+        protected void PrintTreePaths(Node node)
         {
             if (node == null) return;
             if (node.Left != null)
