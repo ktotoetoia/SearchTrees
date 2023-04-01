@@ -1,60 +1,101 @@
-﻿using System;
-
-namespace Trees
+﻿namespace Trees
 {
-    abstract class TreeBase<Node> where Node : NodeBase<Node>
+    public interface ITree<type, nodeType>
+        where type : IComparable<type>
+        where nodeType : INode<nodeType>
     {
-        public Node root { get; protected set; }
-        public int LastKey { get; protected set; }
+        public nodeType root { get; set; }
+        
+        public delegate void NodeDelegate(nodeType node);
+        public event NodeDelegate OnNodeRemoved;
+        public event NodeDelegate OnNodeAdded;
 
-        public delegate void NodeDelegate(Node node);
-        public event NodeDelegate OnNodeDeleted;
+        public void Add(type value);
 
-        public virtual void Insert(Node node, Node comparableNode)
+        public nodeType Remove(type value);
+
+        public nodeType Find(type value);
+    }
+
+    public interface ITreeVizualizer
+    {
+        public void PrintTree();
+        public void PrintTreePaths();
+    }
+
+    public interface INode<N>
+    {
+        public IComparable Value { get; set; }
+
+        public N Left { get; set; }
+        public N Right { get; set; }
+    }
+
+    class Node : INode<Node>
+    {
+        public IComparable Value { get; set; }
+        public Node Left { get; set; }
+        public Node Right { get; set; }
+
+        public Node( IComparable value)
         {
+            Value = value;
+        }
+    }
 
+    class BinarySearchTree<type> : ITree<type,Node>, ITreeVizualizer
+         where type : IComparable<type>
+    {
+        public Node root { get; set; }
+        
+        public event ITree<type,Node>.NodeDelegate OnNodeRemoved;
+        public event ITree<type,Node>.NodeDelegate OnNodeAdded;
+
+        protected void Add(Node node, Node comparableNode)
+        {
             if (node.Value.CompareTo(comparableNode.Value) >= 1)
             {
                 if (comparableNode.Right == null)
                     comparableNode.Right = node;
                 else
-                    Insert(node, comparableNode.Right);
+                    Add(node, comparableNode.Right);
             }
             else if (node.Value.CompareTo(comparableNode.Value) < 1)
             {
                 if (comparableNode.Left == null)
                     comparableNode.Left = node;
                 else
-                    Insert(node, comparableNode.Left);
+                    Add(node, comparableNode.Left);
             }
         }
 
-        public virtual Node Search(Node node, int key)
-        {
-            if (node == null) return null;
-            if (node.Key == key) return node;
-            return node.Value.CompareTo(key) > 1 ? Search(node.Left, key) : Search(node.Right, key);
-        }
-
-        public Node GetMin(Node node)
+        protected Node GetMin(Node node)
         {
             if (node == null) return null;
             if (node.Left == null) return node;
             return GetMin(node.Left);
         }
 
-        public Node GetMax(Node node)
+        protected Node GetMax(Node node)
         {
             if (node == null) return null;
             if (node.Right == null) return node;
             return GetMax(node.Right);
         }
 
-        public Node Delete(Node node, int key)
+        protected Node Find(type value, Node currentNode)
+        {
+            if (currentNode == null) return null;
+            if (currentNode.Value == (IComparable)value) return currentNode;
+            return currentNode.Value.CompareTo(value) > 1 ? Find(value, currentNode.Left) : Find(value, currentNode.Right);
+        }
+
+        protected Node Delete(type value, Node node)
         {
             if (node == null) return null;
-            if (node.Key < key) node.Left = Delete(node.Left, key);
-            else if (node.Key > key) node.Right = Delete(node.Right, key);
+
+            if (node.Value.CompareTo((IComparable)value)>0) node.Left = Delete(value,node.Left);
+            else if (node.Value.CompareTo((IComparable)value) < 0) node.Right = Delete(value,node.Right);
             else
             {
                 if (node.Left == null || node.Right == null)
@@ -64,19 +105,36 @@ namespace Trees
                 else
                 {
                     Node leftMax = GetMax(node.Left);
-                    node.Key = leftMax.Key;
                     node.Value = leftMax.Value;
-                    node.Right = Delete(node.Right, leftMax.Key);
+                    node.Right = Delete(value,node.Right);
                     node.Left = null;
                 }
+                OnNodeRemoved?.Invoke(node);
             }
-
-            OnNodeDeleted?.Invoke(node);
 
             return node;
         }
 
-        public void PrintTree(Node node)
+        public Node Remove(type value)
+        {
+            return Delete(value, root);
+        }
+
+        public Node Find(type value)
+        {
+            return Find(value,root);
+        }
+
+        public void Add(type value)
+        {
+            Node node = new Node((IComparable)value);
+            if (root == null) root = node;
+            else Add(node, root);
+        }
+
+
+
+        protected void PrintTree(Node node)
         {
             if (node == null) return;
             PrintTree(node.Left);
@@ -84,54 +142,29 @@ namespace Trees
             PrintTree(node.Right);
         }
 
-        public void PrintTreePaths(Node node)
+        private void PrintTreePaths(Node node)
         {
             if (node == null) return;
             if (node.Left != null)
             {
-                Console.WriteLine(node.Value+" "+ node.Left.Value);
+                Console.WriteLine(node.Value + " > " + node.Left.Value);
             }
             if (node.Right != null)
             {
-                Console.WriteLine(node.Value + " " + node.Right.Value);
+                Console.WriteLine(node.Value + " < " + node.Right.Value);
             }
             PrintTreePaths(node.Left);
             PrintTreePaths(node.Right);
         }
-    }
-    abstract class NodeBase<Node> where Node : NodeBase<Node>
-    {
-        public int Key { get; set; }
-        public IComparable Value { get; set; }
 
-        public Node Left { get; set; }
-        public Node Right { get; set; }
-
-        public NodeBase(int key, IComparable value)
+        public void PrintTree()
         {
-            Key = key;
-            Value = value;
+            PrintTree(root);
         }
-    }
-
-    class Node : NodeBase<Node>
-    {
-        public Node(int key, IComparable value) : base(key, value) { }
-    }
-
-    class BinarySearchTree<T> : TreeBase<Node>
-         where T : IComparable<T>
-    {
-        public void Delete(int key)
+        
+        public void PrintTreePaths()
         {
-            Delete(root, key);
-        }
-        public void Insert(T value)
-        {
-            Node node = new Node(LastKey, (IComparable)value);
-            if (root == null) root = node;
-            else Insert(node, root);
-            LastKey++;
+            PrintTreePaths(root);
         }
     }
 }

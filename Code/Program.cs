@@ -4,18 +4,21 @@
     {
         static void Main(string[] args)
         {
-            AVLTree<string> tree = new AVLTree<string>();
+            BinarySearchTree<string> tree = new BinarySearchTree<string>();
 
-            tree.Insert("a");
-            tree.Insert("b");
-            tree.Insert("c");
-            tree.Insert("d");
-            tree.Insert("e");
+            tree.Add("m");
+            tree.Add("a");
+            tree.Add("n");
+            tree.Add("c");
+            tree.Add("a");
+            tree.Add("o");
+            tree.Add("n");
 
-            tree.Delete("b");
-            
-            tree.PrintTree(tree.root);
-            tree.PrintTreePaths(tree.root);
+            tree.Remove("n");
+            tree.Remove("c");
+
+            tree.PrintTree();
+            tree.PrintTreePaths();
         }
     }
 }
