@@ -1,47 +1,59 @@
 ﻿namespace Trees
 {
-    public interface INode<Node>
+    class Node : INode
     {
         public IComparable Value { get; set; }
-
-        public Node Left { get; set; }
-        public Node Right { get; set; }
-    }
-
-    class Node : INode<Node>
-    {
-        public IComparable Value { get; set; }
-        public Node Left { get; set; }
-        public Node Right { get; set; }
+        public virtual INode Left { get; set; }
+        public virtual INode Right { get; set; }
 
         public Node(IComparable value)
         {
             Value = value;
         }
 
-        public void Add(Node node)
+        /// <summary>
+        /// adding node as child of this
+        /// </summary>
+        /// <returns> parent of added node </returns>
+
+        public virtual INode Add(INode node)
         {
+            INode result;
+
             if (node.Value.CompareTo(Value) < 0)
             {
                 if (Left == null)
                 {
                     Left = node;
-                    return;
+                    result = this;
                 }
-                Left.Add(node);
-                return;
+                else
+                {
+                    result = Left.Add(node);
+                }
             }
-
-            if (Right == null)
+            else
             {
-                Right = node;
-                return;
+                if (Right == null)
+                {
+                    Right = node;
+                    result = this;
+                }
+                else
+                {
+                    result = Right.Add(node);
+                }
             }
 
-            Right.Add(node);
+            return result;
         }
 
-        public Node Find(IComparable value)
+        /// <summary>
+        /// finding node with value, from childs of this
+        /// </summary>
+        /// <returns> returns node or null if node is not exist in this</returns>
+
+        public virtual INode Find(IComparable value)
         {
             if (Value.CompareTo(value) == 0)
             {

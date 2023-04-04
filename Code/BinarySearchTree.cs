@@ -1,56 +1,35 @@
 ﻿namespace Trees
 {
-    public interface ITree<type, nodeType>
-        where type : IComparable<type>
-        where nodeType : INode<nodeType>
-    {
-        public nodeType root { get; set; }
-        
-        public delegate void NodeDelegate(nodeType node);
-        public event NodeDelegate OnNodeRemoved;
-        public event NodeDelegate OnNodeAdded;
-
-        public void Add(type value);
-
-        public nodeType Remove(type value);
-
-        public nodeType Find(type value);
-    }
-
-    public interface ITreeVizualizer
-    {
-        public void PrintTree();
-        public void PrintTreePaths();
-    }
-
-    class BinarySearchTree<type> : ITree<type,Node>, ITreeVizualizer
+    class BinarySearchTree<type> : ITree<type>, ITreeVizualizer
          where type : IComparable<type>
     {
-        public Node root { get; set; }
+        public INode root { get; set; }
         
-        public event ITree<type,Node>.NodeDelegate OnNodeRemoved;
-        public event ITree<type,Node>.NodeDelegate OnNodeAdded;
+        public event ITree<type>.NodeDelegate OnNodeRemoved;
+        public event ITree<type>.NodeDelegate OnNodeAdded;
 
-        protected void Add(Node node)
-        {
-            root.Add(node);
-        }
-
-        protected Node GetMin(Node node)
+        protected INode GetMin(INode node)
         {
             if (node == null) return null;
             if (node.Left == null) return node;
             return GetMin(node.Left);
         }
 
-        protected Node GetMax(Node node)
+        protected INode GetMax(INode node)
         {
             if (node == null) return null;
             if (node.Right == null) return node;
             return GetMax(node.Right);
         }
 
-        protected Node Remove(type value, Node node)
+        protected virtual INode Add(INode node)
+        {
+            INode n = root.Add(node);
+            OnNodeAdded?.Invoke(n);
+            return n;
+        }
+
+        protected virtual INode Remove(type value, INode node)
         {
             if (node.Value.CompareTo((IComparable)value) > 0)
             {
@@ -68,7 +47,7 @@
                 }
                 else
                 {
-                    Node leftMax = GetMax(node.Left);
+                    INode leftMax = GetMax(node.Left);
                     node.Value = leftMax.Value;
                     node.Right = Remove(value, node.Right);
                     node.Left = null;
@@ -78,25 +57,41 @@
             
             return node;
         }
-        
-        public Node Remove(type value)
+
+        /// <summary>
+        /// add, and balance node
+        /// </summary>
+        /// <returns> parent of added node </returns>
+
+        public virtual INode Add(type value)
+        {
+            Node node = new Node((IComparable)value);
+            if (root == null)
+            {
+                root = node;
+                return root;
+            }
+            return Add(node);
+        }
+
+        /// <summary>
+        /// remove first node with same value
+        /// </summary>
+        /// <returns> node that replaced the removed node</returns>
+        public INode Remove(type value)
         {
             return Remove(value, root);
         }
 
-        public Node Find(type value)
+        /// <param name="value"></param>
+        /// <returns> returns node or null if node is not exist </returns>
+
+        public INode Find(type value)
         {
             return root.Find((IComparable)value);
         }
-
-        public void Add(type value)
-        {
-            Node node = new Node((IComparable)value);
-            if (root == null) root = node;
-            else Add(node);
-        }
-
-        protected void PrintTree(Node node)
+        
+        protected virtual void PrintTree(INode node)
         {
             if (node == null) return;
             PrintTree(node.Left);
@@ -104,7 +99,7 @@
             PrintTree(node.Right);
         }
 
-        protected void PrintTreePaths(Node node)
+        protected virtual void PrintTreePaths(INode node)
         {
             if (node == null) return;
             if (node.Left != null)
@@ -119,11 +114,17 @@
             PrintTreePaths(node.Right);
         }
 
+        /// <summary>
+        /// prints tree in ascending order
+        /// </summary>
         public void PrintTree()
         {
             PrintTree(root);
         }
         
+        /// <summary>
+        /// prints right and left value of every node
+        /// </summary>
         public void PrintTreePaths()
         {
             PrintTreePaths(root);

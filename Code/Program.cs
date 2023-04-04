@@ -3,25 +3,19 @@
     internal class Program
     {
         // example
+        // not working with more than 75000 nodes
         static void Main(string[] args)
         {
-            BinarySearchTree<string> tree = new BinarySearchTree<string>();
+            AVLTree<int> tree = new AVLTree<int>();
 
-            tree.Add("m");
-            tree.Add("a");
-            tree.Add("n");
-            tree.Add("c");
-            tree.Add("a");
-            tree.Add("o");
-            tree.Add("n");
+            Random a = new Random();
 
-            Node n = tree.Find("m");
-
-            tree.Remove("n");
-            tree.Remove("c");
+            for (int i = 0; i < 75000; i++)
+            {
+                tree.Add(a.Next(0, 100000));
+            }
 
             tree.PrintTree();
-            tree.PrintTreePaths();
         }
     }
 }
