@@ -83,7 +83,6 @@
             return Remove(value, root);
         }
 
-        /// <param name="value"></param>
         /// <returns> returns node or null if node is not exist </returns>
 
         public INode Find(type value)
@@ -128,6 +127,17 @@
         public void PrintTreePaths()
         {
             PrintTreePaths(root);
+        }
+
+        public void PrintAllBalance(INode n)
+        {
+            if(n==null) return;
+
+            AVLNode a = (AVLNode)n;
+            Console.WriteLine(a.GetHeight(a.Right)-a.GetHeight(a.Left));
+
+            PrintAllBalance(n.Left);
+            PrintAllBalance(n.Right);
         }
     }
 }

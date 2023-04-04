@@ -8,14 +8,12 @@
         {
             AVLTree<int> tree = new AVLTree<int>();
 
-            Random a = new Random();
-
-            for (int i = 0; i < 75000; i++)
+            for (int i = 1; i <= 24; i++)
             {
-                tree.Add(a.Next(0, 100000));
+                tree.Add(i);
             }
 
-            tree.PrintTree();
+            tree.PrintTreePaths();
         }
     }
 }

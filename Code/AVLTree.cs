@@ -14,10 +14,9 @@
             node.Left = newRoot.Right;
             newRoot.Right = node;
 
-            if (node == root)
-            {
-                root = newRoot;
-            }
+            (node as AVLNode).UpdateHeight();
+            (newRoot as AVLNode).UpdateHeight();
+
             return newRoot;
         }
 
@@ -27,10 +26,8 @@
             node.Right = newRoot.Left;
             newRoot.Left = node;
 
-            if (node == root)
-            {
-                root = newRoot;
-            }
+            (node as AVLNode).UpdateHeight();
+            (newRoot as AVLNode).UpdateHeight();
             return newRoot;
         }
 
@@ -39,13 +36,11 @@
         /// </summary>
         /// <param name="node"> end</param>
         /// <param name="current"> start</param>
-        /// <returns></returns>
-        
         public INode RecursiveBalance(INode node, INode current)
         {
             if (node == null || current == null) return null;
 
-            if (current.Value.CompareTo(node.Value) < 0)
+            if (current.Value.CompareTo(node.Value) > 0)
             {
                 current.Left = RecursiveBalance(node, current.Left);
             }
@@ -60,8 +55,13 @@
 
         protected INode Balance(INode node)
         {
+            (node as AVLNode).UpdateHeight();
+
             int balance = GetBalance(node);
-            
+            if(node.Value.CompareTo(2)==0)
+            {
+                
+            }
             if (balance < -1)
             {
                 if (GetBalance(node.Left) > 0) 
@@ -82,7 +82,8 @@
         protected override INode Add(INode node)
         {
             INode n = base.Add(node);
-            RecursiveBalance(node, root);
+
+            root = RecursiveBalance(node, root);
             return n;
         }
 
@@ -90,7 +91,6 @@
         /// adding node and balancing the tree
         /// </summary>
         /// <returns> parent of added node </returns>
-
         public override INode Add(type value)
         {
             AVLNode node = new AVLNode((IComparable)value);

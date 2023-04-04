@@ -19,7 +19,7 @@
 
         public int GetHeight(INode node)
         {
-            return node == null ? 0: (node as AVLNode).Height;
+            return node == null ? -1: (node as AVLNode).Height;
         }
 
         public void UpdateHeight()
@@ -31,7 +31,6 @@
         /// adding node as child of this
         /// </summary>
         /// <returns> parent of added node </returns>
-
         public override INode Add(INode node)
         {
             AVLNode result = (AVLNode) base.Add(node);
