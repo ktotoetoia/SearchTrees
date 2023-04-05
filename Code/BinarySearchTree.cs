@@ -24,13 +24,20 @@
 
         protected virtual INode Add(INode node)
         {
-            INode n = root.Add(node);
-            OnNodeAdded?.Invoke(n);
-            return n;
+            if(root != null)
+            {
+                node = root.Add(node);
+            }
+            root = node;
+
+            OnNodeAdded?.Invoke(node);
+            
+            return node;
         }
 
         protected virtual INode Remove(type value, INode node)
         {
+            if (node == null) return null;
             if (node.Value.CompareTo((IComparable)value) > 0)
             {
                 node.Left = Remove(value, node.Left);
@@ -49,8 +56,7 @@
                 {
                     INode leftMax = GetMax(node.Left);
                     node.Value = leftMax.Value;
-                    node.Right = Remove(value, node.Right);
-                    node.Left = null;
+                    Remove((type)leftMax.Value, node.Left);
                 }
                 OnNodeRemoved?.Invoke(node);
             }
@@ -66,11 +72,6 @@
         public virtual INode Add(type value)
         {
             Node node = new Node((IComparable)value);
-            if (root == null)
-            {
-                root = node;
-                return root;
-            }
             return Add(node);
         }
 
@@ -127,17 +128,6 @@
         public void PrintTreePaths()
         {
             PrintTreePaths(root);
-        }
-
-        public void PrintAllBalance(INode n)
-        {
-            if(n==null) return;
-
-            AVLNode a = (AVLNode)n;
-            Console.WriteLine(a.GetHeight(a.Right)-a.GetHeight(a.Left));
-
-            PrintAllBalance(n.Left);
-            PrintAllBalance(n.Right);
         }
     }
 }
