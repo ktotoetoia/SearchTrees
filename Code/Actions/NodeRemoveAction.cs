@@ -33,6 +33,8 @@
                 }
             }
 
+            (node as IHasHeight)?.UpdateHeight();
+
             return node;
         }
 

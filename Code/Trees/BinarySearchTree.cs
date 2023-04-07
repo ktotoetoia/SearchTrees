@@ -1,9 +1,7 @@
-﻿using System.Xml.Linq;
-
-namespace Trees
+﻿namespace Trees
 {
-    class BinarySearchTree<type> : ITree<type>, ITreeVizualizer
-         where type : IComparable<type>
+    class BinarySearchTree<type> : ITree<type>
+        where type : IComparable<type>
     {
         public INode root { get; set; }
 
@@ -48,45 +46,6 @@ namespace Trees
         public INode Find(type value)
         {
             return root.Find((IComparable)value);
-        }
-
-        protected virtual void PrintTreePaths(INode node)
-        {
-            if (node == null) return;
-            if (node.Left != null)
-            {
-                Console.WriteLine(node.Value + " > " + node.Left.Value);
-            }
-            if (node.Right != null)
-            {
-                Console.WriteLine(node.Value + " < " + node.Right.Value);
-            }
-            PrintTreePaths(node.Left);
-            PrintTreePaths(node.Right);
-        }
-
-        protected virtual void PrintTree(INode node)
-        {
-            if (node == null) return;
-            PrintTree(node.Left);
-            Console.WriteLine(node.Value);
-            PrintTree(node.Right);
-        }
-
-        /// <summary>
-        /// prints tree in ascending order
-        /// </summary>
-        public void PrintTree()
-        {
-            PrintTree(root);
-        }
-
-        /// <summary>
-        /// prints right and left value of every node
-        /// </summary>
-        public void PrintTreePaths()
-        {
-            PrintTreePaths(root);
         }
     }
 }

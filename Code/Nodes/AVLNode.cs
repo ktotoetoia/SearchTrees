@@ -2,7 +2,7 @@
 
 namespace Trees
 {
-    class AVLNode : INode, IAvlRotations
+    class AVLNode : INode, IAVLRotations
     {
         public int Height { get; private set; }
 
@@ -53,15 +53,15 @@ namespace Trees
             INode node = this;
             if (balance < -1)
             {
-                if (((IAvlRotations)Left).GetBalance() > 0)
-                    Left = ((IAvlRotations)Left).LeftRotate();
+                if (((IAVLRotations)Left).GetBalance() > 0)
+                    Left = ((IAVLRotations)Left).LeftRotate();
                 node = RightRotate();
             }
 
             else if (balance > 1)
             {
-                if (((IAvlRotations)Right).GetBalance() < 0)
-                    Right = ((IAvlRotations)Right).RightRotate();
+                if (((IAVLRotations)Right).GetBalance() < 0)
+                    Right = ((IAVLRotations)Right).RightRotate();
                 node = LeftRotate();
             }
 

@@ -25,7 +25,7 @@
         public INode Balance();
     }
 
-    public interface IAvlRotations : IBalancing, IHasHeight
+    public interface IAVLRotations : IBalancing, IHasHeight
     {
         public INode RightRotate();
         public INode LeftRotate();

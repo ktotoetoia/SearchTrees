@@ -5,14 +5,15 @@
         // example
         static void Main(string[] args)
         {
-            BinarySearchTree<int> tree = new BinarySearchTree<int>();
+            AVLTree<int> tree = new AVLTree<int>();
+            TreeVisualizer visualizer = new TreeVisualizer();
 
-            for (int i = 1; i <= 20; i++)
+            for (int i = 1; i <= 24; i++)
             {
                 tree.Add(i);
             }
 
-            tree.PrintTree();
+            visualizer.PrintTree(tree);
         }
     }
 }

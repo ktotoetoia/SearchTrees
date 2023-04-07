@@ -18,7 +18,9 @@
 
     public interface ITreeVizualizer
     {
-        public void PrintTree();
-        public void PrintTreePaths();
+        public void PrintTree<type>(ITree<type> tree)
+            where type : IComparable<type>;
+        public void PrintTreePaths<type>(ITree<type> tree)
+            where type : IComparable<type>;
     }
 }

@@ -15,6 +15,7 @@ namespace Trees
         public Node(IComparable value)
         {
             Value = value;
+
             nodeFindAction = new NodeFindAction(this);
             nodeRemoveAction = new NodeRemoveAction(this);
             nodeAddAction = new NodeAddAction(this);
@@ -37,11 +38,11 @@ namespace Trees
         {
             return nodeAddAction.DoAction(value);
         }
+
         /// <summary>
         /// removes node from child of this
         /// </summary>
         /// <returns>node that chenged removed</returns>
-
         public virtual INode Remove(IComparable value)
         {
             return nodeRemoveAction.DoAction(value);
