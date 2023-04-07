@@ -1,51 +1,36 @@
-﻿namespace Trees
+﻿using System.Xml.Linq;
+
+namespace Trees
 {
     class BinarySearchTree<type> : ITree<type>, ITreeVizualizer
          where type : IComparable<type>
     {
         public INode root { get; set; }
-        
+
         public event ITree<type>.NodeDelegate OnNodeRemoved;
         public event ITree<type>.NodeDelegate OnNodeAdded;
-
-        protected INode GetMin(INode node)
-        {
-            if (node == null) return null;
-            if (node.Left == null) return node;
-            return GetMin(node.Left);
-        }
-
-        protected INode GetMax(INode node)
-        {
-            if (node == null) return null;
-            if (node.Right == null) return node;
-            return GetMax(node.Right);
-        }
-
-        protected virtual INode Add(INode node)
-        {
-            if(root != null)
-            {
-                node = root.Add(node.Value);
-            }
-            else
-            {
-                root = node;
-            }
-
-            OnNodeAdded?.Invoke(node);
-            
-            return node;
-        }
 
         /// <summary>
         /// add, and balance node
         /// </summary>
-        /// <returns> parent of added node </returns>
+        /// <returns> added node </returns>
         public virtual INode Add(type value)
         {
-            Node node = new Node((IComparable)value);
-            return Add(node);
+            INode addedNode = null;
+            if (root != null)
+            {
+                addedNode = root.Add((IComparable)value);
+            }
+
+            else
+            {
+                root = new Node((IComparable)value);
+                addedNode = root;
+            }
+
+            OnNodeAdded?.Invoke(addedNode);
+
+            return addedNode;
         }
 
         /// <summary>
@@ -95,7 +80,7 @@
         {
             PrintTree(root);
         }
-        
+
         /// <summary>
         /// prints right and left value of every node
         /// </summary>

@@ -2,7 +2,7 @@
 
 namespace Trees
 {
-    class AVLNode : INode, IHasHeight,IBalancing
+    class AVLNode : INode, IAvlRotations
     {
         public int Height { get; private set; }
 
@@ -24,46 +24,44 @@ namespace Trees
             nodeAddAction = new AVLNodeAddAction(this);
         }
 
-        protected INode RightRotate()
+        public INode RightRotate()
         {
             INode newRoot = Left;
             Left = newRoot.Right;
             newRoot.Right = this;
 
             UpdateHeight();
-            (newRoot as AVLNode).UpdateHeight();
+            (newRoot as IHasHeight)?.UpdateHeight();
 
             return newRoot;
         }
 
-        protected INode LeftRotate()
+        public INode LeftRotate()
         {
             INode newRoot = Right;
             Right = newRoot.Left;
             newRoot.Left = this;
 
             UpdateHeight();
-            (newRoot as AVLNode).UpdateHeight();
+            (newRoot as IHasHeight)?.UpdateHeight();
             return newRoot;
         }
 
         public INode Balance()
         {
-            UpdateHeight();
-
             int balance = GetBalance();
             INode node = this;
             if (balance < -1)
             {
-                if (((AVLNode)Left).GetBalance() > 0)
-                    Left = ((AVLNode)Left).LeftRotate();
+                if (((IAvlRotations)Left).GetBalance() > 0)
+                    Left = ((IAvlRotations)Left).LeftRotate();
                 node = RightRotate();
             }
 
             else if (balance > 1)
             {
-                if (((AVLNode)Right).GetBalance() < 0)
-                    Right = ((AVLNode)Right).RightRotate();
+                if (((IAvlRotations)Right).GetBalance() < 0)
+                    Right = ((IAvlRotations)Right).RightRotate();
                 node = LeftRotate();
             }
 
@@ -77,12 +75,12 @@ namespace Trees
 
         public int GetHeight(INode node)
         {
-            return node == null ? -1: (node as IHasHeight ).Height;
+            return node == null ? -1 : (node as IHasHeight).Height;
         }
 
         public void UpdateHeight()
         {
-            Height = Math.Max(GetHeight(Left),GetHeight(Right))+1;
+            Height = Math.Max(GetHeight(Left), GetHeight(Right)) + 1;
         }
 
         /// <summary>
@@ -91,8 +89,7 @@ namespace Trees
         /// <returns>node of this class</returns>
         public INode InstantCreate(IComparable value)
         {
-            AVLNode node = new AVLNode(value);
-            return node;
+            return new AVLNode(value);
         }
 
         /// <summary>
@@ -107,7 +104,6 @@ namespace Trees
         /// <summary>
         /// removes node from child of this
         /// </summary>
-        /// <param name="value"></param>
         /// <returns>node that chenged removed</returns>
         public virtual INode Remove(IComparable value)
         {

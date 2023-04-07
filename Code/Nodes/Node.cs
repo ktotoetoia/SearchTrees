@@ -26,8 +26,7 @@ namespace Trees
         /// <returns>node of this class</returns>
         public INode InstantCreate(IComparable value)
         {
-            Node node = new Node(value);
-            return node;
+            return new Node(value);
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace Trees
         /// <summary>
         /// removes node from child of this
         /// </summary>
-        /// <param name="value"></param>
         /// <returns>node that chenged removed</returns>
 
         public virtual INode Remove(IComparable value)

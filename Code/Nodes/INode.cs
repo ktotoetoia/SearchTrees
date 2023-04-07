@@ -15,12 +15,19 @@
 
     public interface IHasHeight
     {
-        public int Height { get;}
+        public int Height { get; }
         public void UpdateHeight();
     }
 
     public interface IBalancing
     {
+        public int GetBalance();
         public INode Balance();
+    }
+
+    public interface IAvlRotations : IBalancing, IHasHeight
+    {
+        public INode RightRotate();
+        public INode LeftRotate();
     }
 }
