@@ -8,36 +8,36 @@
         {
             this.node = node;
         }
-
+        
         public INode DoAction(IComparable value)
         {
+            INode result = node;
             if (node.Value.CompareTo(value) >= 0)
             {
                 if (node.Left == null)
                 {
-                    node.Left = node.InstantCreate(value);
+                    return node.Left = node.InstantCreate(value);
                 }
-                else
-                {
-                    node.Left = node.Left.Add(value);
-                }
+
+                result = node.Left.Add(value);
+                node.Left = UpdateBalance(node.Left);
+                return result;
             }
 
-            else
+            if (node.Right == null)
             {
-                if (node.Right == null)
-                {
-                    node.Right = node.InstantCreate(value);
-                }
-                else
-                {
-                    node.Right = node.Right.Add(value);
-                }
+                return node.Right = node.InstantCreate(value);
             }
 
-            (node as IHasHeight)?.UpdateHeight();
-            
-            return (node as IBalancing)?.Balance() ?? node;
+            result = node.Right.Add(value);
+            node.Right = UpdateBalance(node.Right);
+            return result;
+        }
+
+        public INode UpdateBalance(INode noda)
+        {
+            (noda as IHasHeight).UpdateHeight();
+            return  (noda as IBalancing).Balance();
         }
     }
 }

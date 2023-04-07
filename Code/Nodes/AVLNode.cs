@@ -83,38 +83,22 @@ namespace Trees
             Height = Math.Max(GetHeight(Left), GetHeight(Right)) + 1;
         }
 
-        /// <summary>
-        /// create node of this class
-        /// </summary>
-        /// <returns>node of this class</returns>
-        public INode InstantCreate(IComparable value)
+        public virtual INode InstantCreate(IComparable value)
         {
             return new AVLNode(value);
         }
 
-        /// <summary>
-        /// adding node as child of this
-        /// </summary>
-        /// <returns> parent of added node </returns>
-        public INode Add(IComparable value)
+        public virtual INode Add(IComparable value)
         {
             return nodeAddAction.DoAction(value);
         }
 
-        /// <summary>
-        /// removes node from child of this
-        /// </summary>
-        /// <returns>node that chenged removed</returns>
         public virtual INode Remove(IComparable value)
         {
             return nodeRemoveAction.DoAction(value);
         }
 
-        /// <summary>
-        /// finding node with value, from childs of this
-        /// </summary>
-        /// <returns> returns node or null if node is not exist in this</returns>
-        public INode Find(IComparable value)
+        public virtual INode Find(IComparable value)
         {
             return nodeFindAction.DoAction(value);
         }

@@ -1,4 +1,6 @@
-﻿namespace Trees
+﻿using System.Diagnostics;
+
+namespace Trees
 {
     internal class Program
     {
@@ -6,14 +8,11 @@
         static void Main(string[] args)
         {
             AVLTree<int> tree = new AVLTree<int>();
-            TreeVisualizer visualizer = new TreeVisualizer();
-
-            for (int i = 1; i <= 24; i++)
+            
+            for (int i = 1; i <= 1000000; i++)
             {
                 tree.Add(i);
             }
-
-            visualizer.PrintTree(tree);
         }
     }
 }
