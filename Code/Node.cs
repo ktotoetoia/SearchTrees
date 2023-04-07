@@ -6,66 +6,45 @@
         public virtual INode Left { get; set; }
         public virtual INode Right { get; set; }
 
+        protected INodeAction nodeFindAction;
+        protected INodeAction nodeRemoveAction;
+        protected INodeAction nodeAddAction;
         public Node(IComparable value)
         {
             Value = value;
+            nodeFindAction = new NodeFindAction(this);
+            nodeRemoveAction = new NodeRemoveAction(this);
+            nodeAddAction = new NodeAddAction(this);
         }
 
         /// <summary>
         /// adding node as child of this
         /// </summary>
         /// <returns> parent of added node </returns>
-
         public virtual INode Add(INode node)
         {
-            INode result;
+            return nodeAddAction.DoAction(node.Value);
+        }
 
-            if (node.Value.CompareTo(Value) < 0)
-            {
-                if (Left == null)
-                {
-                    Left = node;
-                    result = this;
-                }
-                else
-                {
-                    result = Left.Add(node);
-                }
-            }
-            else
-            {
-                if (Right == null)
-                {
-                    Right = node;
-                    result = this;
-                }
-                else
-                {
-                    result = Right.Add(node);
-                }
-            }
 
-            return result;
+        public virtual INode Remove(IComparable value)
+        {
+            return nodeRemoveAction.DoAction(value);
         }
 
         /// <summary>
         /// finding node with value, from childs of this
         /// </summary>
         /// <returns> returns node or null if node is not exist in this</returns>
-
-        public virtual INode Find(IComparable value)
+        public INode Find(IComparable value)
         {
-            if (Value.CompareTo(value) == 0)
-            {
-                return this;
-            }
+            return nodeFindAction.DoAction(value);
+        }
 
-            if (Value.CompareTo(value) > 0)
-            {
-                return Left == null ? null : Left.Find(value);
-            }
-
-            return Right == null ? null : Right.Find(value);
+        public INode InstantCreate(IComparable value)
+        {
+            Node node = new Node(value);
+            return node;
         }
     }
 }

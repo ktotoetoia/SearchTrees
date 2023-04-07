@@ -10,8 +10,8 @@
         public override INode Add(type value)
         {
             AVLNode node = new AVLNode((IComparable)value);
-            
-            return Add(node);
+            root = Add(node);            
+            return root;
         }
     }
 }

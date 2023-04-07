@@ -1,6 +1,6 @@
 ﻿namespace Trees
 {
-    class AVLNode : INode
+    class AVLNode : INode, IHasHeight,IBalancing
     {
         public int Height { get; private set; }
 
@@ -8,60 +8,16 @@
         public INode Right { get; set; }
 
         public IComparable Value { get; set; }
+
+        protected INodeAction nodeFindAction;
+        protected INodeAction nodeRemoveAction;
+
         public AVLNode(IComparable value)
         {
-            Value= value;
-        }
+            Value = value;
 
-        public int GetBalance()
-        {
-            return GetHeight(Right) - GetHeight(Left);
-        }
-
-        public int GetHeight(INode node)
-        {
-            return node == null ? -1: (node as AVLNode).Height;
-        }
-
-        public void UpdateHeight()
-        {
-            Height = Math.Max(GetHeight(Left),GetHeight(Right))+1;
-        }
-
-        /// <summary>
-        /// adding node as child of this
-        /// </summary>
-        /// <returns> parent of added node </returns>
-        public INode Add(INode node)
-        {
-            INode result;
-
-            if (node.Value.CompareTo(Value) < 0)
-            {
-                if (Left == null)
-                {
-                    Left = node;
-                    result = this;
-                }
-                else
-                {
-                    Left =  Left.Add(node);
-                }
-            }
-            else
-            {
-                if (Right == null)
-                {
-                    Right = node;
-                    result = this;
-                }
-                else
-                {
-                    Right = Right.Add(node);
-                }
-            }
-            UpdateHeight();
-            return Balance();
+            nodeFindAction = new NodeFindAction(this);
+            nodeRemoveAction = new NodeRemoveAction(this);
         }
 
         protected INode RightRotate()
@@ -86,7 +42,8 @@
             (newRoot as AVLNode).UpdateHeight();
             return newRoot;
         }
-        protected INode Balance()
+
+        public INode Balance()
         {
             UpdateHeight();
 
@@ -108,19 +65,68 @@
 
             return node;
         }
+
+        public int GetBalance()
+        {
+            return GetHeight(Right) - GetHeight(Left);
+        }
+
+        public int GetHeight(INode node)
+        {
+            return node == null ? -1: (node as AVLNode).Height;
+        }
+
+        public void UpdateHeight()
+        {
+            Height = Math.Max(GetHeight(Left),GetHeight(Right))+1;
+        }
+
+        /// <summary>
+        /// adding node as child of this
+        /// </summary>
+        /// <returns> parent of added node </returns>
+        public INode Add(INode node)
+        {
+            if (node.Value.CompareTo(Value) < 0)
+            {
+                if (Left == null)
+                {
+                    Left = node;
+                }
+                else
+                {
+                    Left =  Left.Add(node);
+                }
+            }
+            else
+            {
+                if (Right == null)
+                {
+                    Right = node;
+                }
+                else
+                {
+                    Right = Right.Add(node);
+                }
+            }
+            UpdateHeight();
+            return Balance();
+        }
+
+        public INode InstantCreate(IComparable value)
+        {
+            Node node = new Node(value);
+            return node;
+        }
+
+        public virtual INode Remove(IComparable value)
+        {
+            return nodeRemoveAction.DoAction(value);
+        }
+
         public INode Find(IComparable value)
         {
-            if (Value.CompareTo(value) == 0)
-            {
-                return this;
-            }
-
-            if (Value.CompareTo(value) > 0)
-            {
-                return Left == null ? null : Left.Find(value);
-            }
-
-            return Right == null ? null : Right.Find(value);
+            return nodeFindAction.DoAction(value);
         }
     }
 }

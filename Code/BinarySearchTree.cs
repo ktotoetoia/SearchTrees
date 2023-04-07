@@ -28,38 +28,12 @@
             {
                 node = root.Add(node);
             }
-            root = node;
-
-            OnNodeAdded?.Invoke(node);
-            
-            return node;
-        }
-
-        protected virtual INode Remove(type value, INode node)
-        {
-            if (node == null) return null;
-            if (node.Value.CompareTo((IComparable)value) > 0)
-            {
-                node.Left = Remove(value, node.Left);
-            }
-            else if (node.Value.CompareTo((IComparable)value) < 0)
-            {
-                node.Right = Remove(value, node.Right);
-            }
             else
             {
-                if (node.Left == null || node.Right == null)
-                {
-                    node = (node.Left == null) ? node.Right : node.Left;
-                }
-                else
-                {
-                    INode leftMax = GetMax(node.Left);
-                    node.Value = leftMax.Value;
-                    Remove((type)leftMax.Value, node.Left);
-                }
-                OnNodeRemoved?.Invoke(node);
+                root = node;
             }
+
+            OnNodeAdded?.Invoke(node);
             
             return node;
         }
@@ -68,7 +42,6 @@
         /// add, and balance node
         /// </summary>
         /// <returns> parent of added node </returns>
-
         public virtual INode Add(type value)
         {
             Node node = new Node((IComparable)value);
@@ -81,22 +54,15 @@
         /// <returns> node that replaced the removed node</returns>
         public INode Remove(type value)
         {
-            return Remove(value, root);
+            INode result = root.Remove((IComparable)value);
+            OnNodeRemoved?.Invoke(result);
+            return result;
         }
 
         /// <returns> returns node or null if node is not exist </returns>
-
         public INode Find(type value)
         {
             return root.Find((IComparable)value);
-        }
-        
-        protected virtual void PrintTree(INode node)
-        {
-            if (node == null) return;
-            PrintTree(node.Left);
-            Console.WriteLine(node.Value);
-            PrintTree(node.Right);
         }
 
         protected virtual void PrintTreePaths(INode node)
@@ -112,6 +78,14 @@
             }
             PrintTreePaths(node.Left);
             PrintTreePaths(node.Right);
+        }
+
+        protected virtual void PrintTree(INode node)
+        {
+            if (node == null) return;
+            PrintTree(node.Left);
+            Console.WriteLine(node.Value);
+            PrintTree(node.Right);
         }
 
         /// <summary>
