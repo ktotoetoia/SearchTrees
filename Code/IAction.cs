@@ -1,4 +1,4 @@
-﻿namespace Trees
+﻿namespace Trees.Actions
 {
     internal interface INodeAction
     {
@@ -86,7 +86,7 @@
         {
             INode result = null;
 
-            if (node.Value.CompareTo(value) < 0)
+            if (node.Value.CompareTo(value) >= 0)
             {
                 if (node.Left == null)
                 {
@@ -94,7 +94,7 @@
                 }
                 else
                 {
-                    result = node.Left.Add(node);
+                    result = node.Left.Add(value);
                 }
             }
 
@@ -106,22 +106,60 @@
                 }
                 else
                 {
-                    result = node.Right.Add(node);
+                    result = node.Right.Add(value);
                 }
-            }
-
-            if(node is IHasHeight)
-            {
-                (node as IHasHeight).UpdateHeight();
-            }
-
-            if(node is IBalancing)
-            {
-                return (node as IBalancing).Balance();
             }
 
 
             return result;
+        }
+    }
+    public class AVLNodeAddAction : INodeAction
+    {
+        public INode node { get; set; }
+
+        public AVLNodeAddAction(INode node)
+        {
+            this.node = node;
+        }
+
+        public INode DoAction(IComparable value)
+        {
+            if (node.Value.CompareTo(value) >= 0)
+            {
+                if (node.Left == null)
+                {
+                    node.Left = node.InstantCreate(value);
+                }
+                else
+                {
+                    node.Left = node.Left.Add(value);
+                }
+            }
+
+            else
+            {
+                if (node.Right == null)
+                {
+                    node.Right = node.InstantCreate(value);
+                }
+                else
+                {
+                    node.Right = node.Right.Add(value);
+                }
+            }
+
+            if (node is IHasHeight)
+            {
+                (node as IHasHeight).UpdateHeight();
+            }
+
+            if (node is IBalancing)
+            {
+                return (node as IBalancing).Balance();
+            }
+
+            return node;
         }
     }
 }

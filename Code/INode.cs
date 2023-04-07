@@ -8,7 +8,7 @@
         public INode Right { get; set; }
 
         public INode InstantCreate(IComparable value);
-        public INode Add(INode node);
+        public INode Add(IComparable value);
         public INode Find(IComparable value);
         public INode Remove(IComparable value);
     }

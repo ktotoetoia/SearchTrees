@@ -26,7 +26,7 @@
         {
             if(root != null)
             {
-                node = root.Add(node);
+                node = root.Add(node.Value);
             }
             else
             {
