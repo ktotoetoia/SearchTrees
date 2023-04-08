@@ -18,7 +18,6 @@
             if (root != null)
             {
                 addedNode = root.Add((IComparable)value);
-                (root as IHasHeight).UpdateHeight();
                 root = (root as IBalancing).Balance();
             }
 

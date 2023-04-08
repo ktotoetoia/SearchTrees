@@ -2,32 +2,32 @@
 {
     public class NodeAddAction : INodeAction
     {
-        public INode node { get; set; }
+        public INode Node { get; set; }
 
         public NodeAddAction(INode node)
         {
-            this.node = node;
+            Node = node;
         }
 
         public INode DoAction(IComparable value)
         {
-            if (node.Value.CompareTo(value) >= 0)
+            if (Node.Value.CompareTo(value) >= 0)
             {
-                if (node.Left == null)
+                if (Node.Left == null)
                 {
-                    node.Left = node.InstantCreate(value);
-                    return node.Left;
+                    Node.Left = Node.InstantCreate(value);
+                    return Node.Left;
                 }
-                return node.Left.Add(value);
+                return Node.Left.Add(value);
             }
 
-            if (node.Right == null)
+            if (Node.Right == null)
             {
-                node.Right = node.InstantCreate(value);
-                return node.Right;
+                Node.Right = Node.InstantCreate(value);
+                return Node.Right;
             }
 
-            return node.Right.Add(value);    
+            return Node.Right.Add(value);    
         }
     }
 }

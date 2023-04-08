@@ -6,8 +6,33 @@ namespace Trees
     {
         public int Height { get; private set; }
 
-        public INode Left { get; set; }
-        public INode Right { get; set; }
+        private INode left;
+        private INode right;
+        public INode Left
+        {
+            get
+            {
+                return left;
+            }
+            set
+            {
+                left = value;
+                UpdateHeight();
+            }
+        }
+
+        public INode Right
+        {
+            get
+            {
+                return right;
+            }
+            set
+            {
+                right = value;
+                UpdateHeight();
+            }
+        }
 
         public IComparable Value { get; set; }
 
@@ -30,9 +55,6 @@ namespace Trees
             Left = newRoot.Right;
             newRoot.Right = this;
 
-            UpdateHeight();
-            (newRoot as IHasHeight)?.UpdateHeight();
-
             return newRoot;
         }
 
@@ -42,8 +64,6 @@ namespace Trees
             Right = newRoot.Left;
             newRoot.Left = this;
 
-            UpdateHeight();
-            (newRoot as IHasHeight)?.UpdateHeight();
             return newRoot;
         }
 

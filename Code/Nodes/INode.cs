@@ -1,12 +1,7 @@
 ﻿namespace Trees
 {
-    public interface INode
+    public interface INode : ILeftRightPointer , IHasValue
     {
-        public IComparable Value { get; set; }
-
-        public INode Left { get; set; }
-        public INode Right { get; set; }
-
         /// <summary>
         /// create node of this class
         /// </summary>
@@ -38,6 +33,11 @@
         public void UpdateHeight();
     }
 
+    public interface IHasValue
+    {
+        public IComparable Value { get; set; }
+    }
+
     public interface IBalancing
     {
         public int GetBalance();
@@ -48,5 +48,11 @@
     {
         public INode RightRotate();
         public INode LeftRotate();
+    }
+
+    public interface ILeftRightPointer
+    {
+        public INode Left { get; set; }
+        public INode Right { get; set; }
     }
 }

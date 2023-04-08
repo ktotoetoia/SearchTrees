@@ -2,40 +2,38 @@
 {
     public class NodeRemoveAction : INodeAction
     {
-        public INode node { get; set; }
+        public INode Node { get; set; }
 
         public NodeRemoveAction(INode node)
         {
-            this.node = node;
+            Node = node;
         }
 
         public INode DoAction(IComparable value)
         {
-            if (node.Value.CompareTo(value) > 0)
+            if (Node.Value.CompareTo(value) > 0)
             {
-                node.Left = node.Left.Remove(value);
+                Node.Left = Node.Left.Remove(value);
             }
-            else if (node.Value.CompareTo(value) < 0)
+            else if (Node.Value.CompareTo(value) < 0)
             {
-                node.Right = node.Right.Remove(value);
+                Node.Right = Node.Right.Remove(value);
             }
             else
             {
-                if (node.Left == null || node.Right == null)
+                if (Node.Left == null || Node.Right == null)
                 {
-                    return node.Left == null ? node.Right : node.Left;
+                    return Node.Left == null ? Node.Right : Node.Left;
                 }
                 else
                 {
-                    INode leftMax = GetMax(node.Left);
-                    node.Value = leftMax.Value;
-                    node.Left = node.Left.Remove(leftMax.Value);
+                    INode leftMax = GetMax(Node.Left);
+                    Node.Value = leftMax.Value;
+                    Node.Left = Node.Left.Remove(leftMax.Value);
                 }
             }
 
-            (node as IHasHeight)?.UpdateHeight();
-
-            return node;
+            return Node;
         }
 
         private INode GetMax(INode node)
