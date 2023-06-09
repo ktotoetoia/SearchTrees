@@ -13,21 +13,32 @@
         {
             if (Node.Value.CompareTo(value) >= 0)
             {
-                if (Node.Left == null)
-                {
-                    Node.Left = Node.InstantCreate(value);
-                    return Node.Left;
-                }
-                return Node.Left.Add(value);
+                return AddToLeftNode(value);
             }
 
+            return AddToRightNode(value);
+        }
+
+        protected virtual INode AddToLeftNode(IComparable value)
+        {
+            if (Node.Left == null)
+            {
+                Node.Left = Node.InstantCreate(value);
+                return Node.Left;
+            }
+
+            return Node.Left.Add(value);
+        }
+
+        protected virtual INode AddToRightNode(IComparable value)
+        {
             if (Node.Right == null)
             {
                 Node.Right = Node.InstantCreate(value);
                 return Node.Right;
             }
 
-            return Node.Right.Add(value);    
+            return Node.Right.Add(value);
         }
     }
 }

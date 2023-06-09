@@ -1,30 +1,30 @@
 ﻿namespace Trees
 {
-    class AVLTree<type> : ITree<type>
-        where type : IComparable<type>
+    public class AVLTree<valueType> : ITree<valueType>
+        where valueType : IComparable<valueType>
     {
-        public INode root { get; set; }
+        public INode Root { get; set; }
 
-        public event ITree<type>.NodeDelegate OnNodeRemoved;
-        public event ITree<type>.NodeDelegate OnNodeAdded;
+        public event INodeEvents.NodeDelegate OnNodeRemoved;
+        public event INodeEvents.NodeDelegate OnNodeAdded;
 
         /// <summary>
         /// adding node and balancing the tree
         /// </summary>
         /// <returns> added node </returns>
-        public INode Add(type value)
+        public INode Add(valueType value)
         {
-            INode addedNode = null;
-            if (root != null)
+            INode addedNode;
+            if (Root != null)
             {
-                addedNode = root.Add((IComparable)value);
-                root = (root as IBalancing).Balance();
+                addedNode = Root.Add((IComparable)value);
+                Root = ((IBalancing)Root).Balance();
             }
 
             else
             {
                 addedNode = new AVLNode((IComparable)value);
-                root = addedNode;
+                Root = addedNode;
             }
 
             OnNodeAdded?.Invoke(addedNode);
@@ -32,16 +32,16 @@
             return addedNode;
         }
 
-        public INode Remove(type value)
+        public INode Remove(valueType value)
         {
-            INode result = root.Remove((IComparable)value);
+            INode result = Root.Remove((IComparable)value);
             OnNodeRemoved?.Invoke(result);
             return result;
         }
 
-        public INode Find(type value)
+        public INode Find(valueType value)
         {
-            return root.Find((IComparable)value);
+            return Root.Find((IComparable)value);
         }
     }
 }

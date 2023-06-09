@@ -1,12 +1,12 @@
 ﻿namespace Trees
 {
-    class BinarySearchTree<type> : ITree<type>
+    public class BinarySearchTree<type> : ITree<type>
         where type : IComparable<type>
     {
-        public INode root { get; set; }
+        public INode Root { get; set; }
 
-        public event ITree<type>.NodeDelegate OnNodeRemoved;
-        public event ITree<type>.NodeDelegate OnNodeAdded;
+        public event INodeEvents.NodeDelegate OnNodeRemoved;
+        public event INodeEvents.NodeDelegate OnNodeAdded;
 
         /// <summary>
         /// add, and balance node
@@ -14,16 +14,16 @@
         /// <returns> added node </returns>
         public virtual INode Add(type value)
         {
-            INode addedNode = null;
-            if (root != null)
+            INode addedNode;
+            if (Root != null)
             {
-                addedNode = root.Add((IComparable)value);
+                addedNode = Root.Add((IComparable)value);
             }
 
             else
             {
-                root = new Node((IComparable)value);
-                addedNode = root;
+                Root = new Node((IComparable)value);
+                addedNode = Root;
             }
 
             OnNodeAdded?.Invoke(addedNode);
@@ -33,14 +33,14 @@
 
         public INode Remove(type value)
         {
-            INode result = root.Remove((IComparable)value);
+            INode result = Root.Remove((IComparable)value);
             OnNodeRemoved?.Invoke(result);
             return result;
         }
 
         public INode Find(type value)
         {
-            return root.Find((IComparable)value);
+            return Root.Find((IComparable)value);
         }
     }
 }

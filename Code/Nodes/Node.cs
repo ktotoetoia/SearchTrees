@@ -2,7 +2,7 @@
 
 namespace Trees
 {
-    class Node : INode
+    public class Node : INode
     {
         public IComparable Value { get; set; }
         public virtual INode Left { get; set; }

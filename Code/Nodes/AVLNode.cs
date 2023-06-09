@@ -2,7 +2,7 @@
 
 namespace Trees
 {
-    class AVLNode : INode, IAVLRotations
+    public class AVLNode : INode, IAVLRotations
     {
         public int Height { get; private set; }
 

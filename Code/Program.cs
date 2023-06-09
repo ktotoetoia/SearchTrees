@@ -5,7 +5,7 @@
         // example
         static void Main(string[] args)
         {
-            AVLTree<int> tree = new AVLTree<int>();
+            ITree<int> tree = new AVLTree<int>();
             ITreeVizualizer visualizer = new TreeVisualizer();
 
             for (int i = 1; i <= 100; i++)

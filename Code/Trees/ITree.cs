@@ -1,14 +1,8 @@
 ﻿namespace Trees
 {
-    public interface ITree<valueType>
+    public interface ITree<valueType> : INodeEvents, IHasRoot
         where valueType : IComparable<valueType>
     {
-        public INode root { get; set; }
-
-        public delegate void NodeDelegate(INode node);
-        public event NodeDelegate OnNodeRemoved;
-        public event NodeDelegate OnNodeAdded;
-
         /// <summary>
         /// Creates and add node 
         /// </summary>
@@ -24,19 +18,16 @@
         /// <returns> First node with the same value, or null if node is not exist</returns>
         public INode Find(valueType value);
     }
-
-    public interface ITreeVizualizer
+    
+    public interface INodeEvents
     {
-        /// <summary>
-        /// Prints tree in ascending order
-        /// </summary>
-        public void PrintTree<type>(ITree<type> tree)
-            where type : IComparable<type>;
+        public delegate void NodeDelegate(INode node);
+        public event NodeDelegate OnNodeRemoved;
+        public event NodeDelegate OnNodeAdded;
+    }
 
-        /// <summary>
-        /// Prints nodes with their childs
-        /// </summary>
-        public void PrintTreePaths<type>(ITree<type> tree)
-            where type : IComparable<type>;
+    public interface IHasRoot
+    {
+        public INode Root { get; set; }
     }
 }

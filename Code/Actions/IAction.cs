@@ -1,6 +1,6 @@
 ﻿namespace Trees.Actions
 {
-    internal interface INodeAction
+    public interface INodeAction
     {
         public INode DoAction(IComparable value);
     }

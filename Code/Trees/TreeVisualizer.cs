@@ -1,6 +1,6 @@
 ﻿namespace Trees
 {
-    internal class TreeVisualizer : ITreeVizualizer
+    public class TreeVisualizer : ITreeVizualizer
     {
         protected void PrintTree(INode node)
         {
@@ -12,31 +12,29 @@
 
         protected void PrintTreePaths(INode node)
         {
-            if(node == null) return;
-
             if (node.Left != null)
             {
                 Console.WriteLine(node.Value + ">" + node.Left.Value);
+                PrintTreePaths(node.Left);
             }
-            PrintTreePaths(node.Left);
+
             if(node.Right != null)
             {
                 Console.WriteLine(node.Value + "<" + node.Right.Value);
+                PrintTreePaths(node.Right);
             }
-
-            PrintTreePaths(node.Right);
         }
 
         public void PrintTree<type>(ITree<type> tree)
             where type : IComparable<type>
         {
-            PrintTree(tree.root);
+            PrintTree(tree.Root);
         }
 
         public void PrintTreePaths<type>(ITree<type> tree)
             where type : IComparable<type>
         {
-            PrintTreePaths(tree.root);
+            PrintTreePaths(tree.Root);
         }
     }
 }

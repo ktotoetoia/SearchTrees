@@ -15,25 +15,33 @@
             {
                 Node.Left = Node.Left.Remove(value);
             }
+         
             else if (Node.Value.CompareTo(value) < 0)
             {
                 Node.Right = Node.Right.Remove(value);
             }
+            
             else
             {
                 if (Node.Left == null || Node.Right == null)
                 {
-                    return Node.Left == null ? Node.Right : Node.Left;
+                    return Node.Left ?? Node.Right;
                 }
+
                 else
                 {
-                    INode leftMax = GetMax(Node.Left);
-                    Node.Value = leftMax.Value;
-                    Node.Left = Node.Left.Remove(leftMax.Value);
+                    RemoveLeftNode();
                 }
             }
 
             return Node;
+        }
+
+        private void RemoveLeftNode()
+        {
+            INode leftMax = GetMax(Node.Left);
+            Node.Value = leftMax.Value;
+            Node.Left = Node.Left.Remove(leftMax.Value);
         }
 
         private INode GetMax(INode node)
