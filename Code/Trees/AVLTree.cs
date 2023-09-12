@@ -16,6 +16,15 @@
         /// <returns> added node </returns>
         public INode Add(valueType value)
         {
+            INode addedNode = AddNode(value);
+
+            OnNodeAdded?.Invoke(addedNode);
+
+            return addedNode;
+        }
+
+        private INode AddNode(valueType value)
+        {
             INode addedNode;
 
             if (Root != null)
@@ -29,8 +38,6 @@
                 addedNode = _nodeFactory.Create(value);
                 Root = addedNode;
             }
-
-            OnNodeAdded?.Invoke(addedNode);
 
             return addedNode;
         }

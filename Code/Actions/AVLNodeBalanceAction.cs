@@ -2,7 +2,7 @@
 {
     public class AVLNodeBalanceAction
     {
-        private AVLNode _node;
+        protected AVLNode _node;
 
         public AVLNodeBalanceAction(AVLNode node)
         {

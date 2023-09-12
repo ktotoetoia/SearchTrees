@@ -5,9 +5,10 @@
     {
         public event Action<INode> OnNodeRemoved;
         public event Action<INode> OnNodeAdded;
+        
+        private INodeFactory _nodeFactory = new BinaryNodeFactory();
 
         public INode Root { get; set; }
-        private INodeFactory _nodeFactory = new BinaryNodeFactory();
 
         /// <summary>
         /// add, and balance node
@@ -15,8 +16,17 @@
         /// <returns> added node </returns>
         public virtual INode Add(valueType value)
         {
-            INode addedNode;
+            INode addedNode = AddNode(value);
+            
+            OnNodeAdded?.Invoke(addedNode);
 
+            return addedNode;
+        }
+
+        private INode AddNode(valueType value)
+        {
+            INode addedNode;
+            
             if (Root != null)
             {
                 addedNode = Root.Add(value);
@@ -27,8 +37,6 @@
                 Root = _nodeFactory.Create(value);
                 addedNode = Root;
             }
-
-            OnNodeAdded?.Invoke(addedNode);
 
             return addedNode;
         }
