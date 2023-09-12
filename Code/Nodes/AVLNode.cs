@@ -4,19 +4,23 @@ namespace Trees
 {
     public class AVLNode : INode, IAVLRotations
     {
-        public int Height { get; private set; }
+        private INodeFactory _nodeFactory = new AVLNodeFactory();
+        private INode _left;
+        private INode _right;
+        protected AVLNodeBalanceAction _nodeBalanceAction;
+        protected INodeAction _nodeFindAction;
+        protected INodeAction _nodeRemoveAction;
+        protected INodeAction _nodeAddAction;
 
-        private INode left;
-        private INode right;
         public INode Left
         {
             get
             {
-                return left;
+                return _left;
             }
             set
             {
-                left = value;
+                _left = value;
                 UpdateHeight();
             }
         }
@@ -25,67 +29,41 @@ namespace Trees
         {
             get
             {
-                return right;
+                return _right;
             }
             set
             {
-                right = value;
+                _right = value;
                 UpdateHeight();
             }
         }
 
         public IComparable Value { get; set; }
-
-        protected INodeAction nodeFindAction;
-        protected INodeAction nodeRemoveAction;
-        protected INodeAction nodeAddAction;
+        public int Height { get; set; }
 
         public AVLNode(IComparable value)
         {
             Value = value;
 
-            nodeFindAction = new NodeFindAction(this);
-            nodeRemoveAction = new NodeRemoveAction(this);
-            nodeAddAction = new AVLNodeAddAction(this);
-        }
-
-        public INode RightRotate()
-        {
-            INode newRoot = Left;
-            Left = newRoot.Right;
-            newRoot.Right = this;
-
-            return newRoot;
-        }
-
-        public INode LeftRotate()
-        {
-            INode newRoot = Right;
-            Right = newRoot.Left;
-            newRoot.Left = this;
-
-            return newRoot;
+            _nodeFindAction = new NodeFindAction(this);
+            _nodeRemoveAction = new NodeRemoveAction(this);
+            _nodeAddAction = new AVLNodeAddAction(this,_nodeFactory);
+            _nodeBalanceAction = new AVLNodeBalanceAction(this);
         }
 
         public INode Balance()
         {
-            int balance = GetBalance();
-            INode node = this;
-            if (balance < -1)
-            {
-                if (((IAVLRotations)Left).GetBalance() > 0)
-                    Left = ((IAVLRotations)Left).LeftRotate();
-                node = RightRotate();
-            }
+            return _nodeBalanceAction.Balance();
+        }
 
-            else if (balance > 1)
-            {
-                if (((IAVLRotations)Right).GetBalance() < 0)
-                    Right = ((IAVLRotations)Right).RightRotate();
-                node = LeftRotate();
-            }
+        public INode RightRotate()
+        {
+            return _nodeBalanceAction.RightRotate();
+        }
 
-            return node;
+        public INode LeftRotate()
+        {
+            return _nodeBalanceAction.LeftRotate();
         }
 
         public int GetBalance()
@@ -95,7 +73,7 @@ namespace Trees
 
         public int GetHeight(INode node)
         {
-            return node == null ? -1 : (node as IHasHeight).Height;
+            return node == null ? -1 : ((IHasHeight)node).Height;
         }
 
         public void UpdateHeight()
@@ -103,24 +81,19 @@ namespace Trees
             Height = Math.Max(GetHeight(Left), GetHeight(Right)) + 1;
         }
 
-        public virtual INode InstantCreate(IComparable value)
-        {
-            return new AVLNode(value);
-        }
-
         public virtual INode Add(IComparable value)
         {
-            return nodeAddAction.DoAction(value);
+            return _nodeAddAction.DoAction(value);
         }
 
         public virtual INode Remove(IComparable value)
         {
-            return nodeRemoveAction.DoAction(value);
+            return _nodeRemoveAction.DoAction(value);
         }
 
         public virtual INode Find(IComparable value)
         {
-            return nodeFindAction.DoAction(value);
+            return _nodeFindAction.DoAction(value);
         }
     }
 }

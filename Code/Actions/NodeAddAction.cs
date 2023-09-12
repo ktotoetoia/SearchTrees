@@ -2,16 +2,18 @@
 {
     public class NodeAddAction : INodeAction
     {
-        public INode Node { get; set; }
+        protected INodeFactory _nodeFactory;
+        protected INode _node;
 
-        public NodeAddAction(INode node)
+        public NodeAddAction(INode node, INodeFactory nodeFactory)
         {
-            Node = node;
+            _node = node;
+            _nodeFactory = nodeFactory;
         }
 
         public INode DoAction(IComparable value)
         {
-            if (Node.Value.CompareTo(value) >= 0)
+            if (_node.Value.CompareTo(value) >= 0)
             {
                 return AddToLeftNode(value);
             }
@@ -21,24 +23,26 @@
 
         protected virtual INode AddToLeftNode(IComparable value)
         {
-            if (Node.Left == null)
+            if (_node.Left == null)
             {
-                Node.Left = Node.InstantCreate(value);
-                return Node.Left;
+                _node.Left = _nodeFactory.Create(value);
+         
+                return _node.Left;
             }
 
-            return Node.Left.Add(value);
+            return _node.Left.Add(value);
         }
 
         protected virtual INode AddToRightNode(IComparable value)
         {
-            if (Node.Right == null)
+            if (_node.Right == null)
             {
-                Node.Right = Node.InstantCreate(value);
-                return Node.Right;
+                _node.Right = _nodeFactory.Create(value);
+                
+                return _node.Right;
             }
 
-            return Node.Right.Add(value);
+            return _node.Right.Add(value);
         }
     }
 }

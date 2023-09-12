@@ -3,7 +3,7 @@
     internal class Program
     {
         // example
-        static void Main(string[] args)
+        static void Main()
         {
             ITree<int> tree = new AVLTree<int>();
             ITreeVizualizer visualizer = new TreeVisualizer();

@@ -2,26 +2,26 @@
 {
     public class NodeFindAction : INodeAction
     {
-        public INode Node { get; set; }
+        protected INode _node;
 
         public NodeFindAction(INode node)
         {
-            Node = node;
+            _node = node;
         }
 
         public INode DoAction(IComparable value)
         {
-            if (Node.Value.CompareTo(value) == 0)
+            if (_node.Value.CompareTo(value) == 0)
             {
-                return Node;
+                return _node;
             }
 
-            if (Node.Value.CompareTo(value) > 0)
+            if (_node.Value.CompareTo(value) > 0)
             {
-                return Node.Left?.Find(value);
+                return _node.Left?.Find(value);
             }
             
-            return Node.Right?.Find(value);
+            return _node.Right?.Find(value);
         }
     }
 }

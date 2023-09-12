@@ -4,7 +4,11 @@
     {
         protected void PrintTree(INode node)
         {
-            if (node == null) return;
+            if (node == null)
+            {
+                return;
+            }
+
             PrintTree(node.Left);
             Console.WriteLine(node.Value);
             PrintTree(node.Right);
@@ -25,14 +29,14 @@
             }
         }
 
-        public void PrintTree<type>(ITree<type> tree)
-            where type : IComparable<type>
+        public void PrintTree<valueType>(ITree<valueType> tree)
+            where valueType : IComparable
         {
             PrintTree(tree.Root);
         }
 
-        public void PrintTreePaths<type>(ITree<type> tree)
-            where type : IComparable<type>
+        public void PrintTreePaths<valueType>(ITree<valueType> tree)
+            where valueType : IComparable
         {
             PrintTreePaths(tree.Root);
         }

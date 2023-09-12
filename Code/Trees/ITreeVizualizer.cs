@@ -5,13 +5,13 @@
         /// <summary>
         /// Prints tree in ascending order
         /// </summary>
-        public void PrintTree<type>(ITree<type> tree)
-            where type : IComparable<type>;
+        public void PrintTree<valueType>(ITree<valueType> tree)
+            where valueType : IComparable;
 
         /// <summary>
         /// Prints nodes with their childs
         /// </summary>
-        public void PrintTreePaths<type>(ITree<type> tree)
-            where type : IComparable<type>;
+        public void PrintTreePaths<valueType>(ITree<valueType> tree)
+            where valueType : IComparable;
     }
 }

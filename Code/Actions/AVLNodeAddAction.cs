@@ -2,37 +2,40 @@
 {
     public class AVLNodeAddAction : NodeAddAction
     {
-        public AVLNodeAddAction(INode node) : base(node) { }
-        
+        public AVLNodeAddAction(INode node, INodeFactory nodeFactory) 
+            : base(node, nodeFactory) { }
+
         protected override INode AddToLeftNode(IComparable value)
         {
-            if (Node.Left == null)
+            if (_node.Left == null)
             {
-                return Node.Left = Node.InstantCreate(value);
+                return _node.Left = _nodeFactory.Create(value);
             }
 
-            INode result = Node.Left.Add(value);
-            Node.Left = UpdateBalance(Node.Left);
+            INode result = _node.Left.Add(value);
+
+            _node.Left = UpdateBalance(_node.Left);
             
             return result;
         }
 
         protected override INode AddToRightNode(IComparable value)
         {
-            if (Node.Right == null)
+            if (_node.Right == null)
             {
-                return Node.Right = Node.InstantCreate(value);
+                return _node.Right = _nodeFactory.Create(value);
             }
 
-            INode result = Node.Right.Add(value);
-            Node.Right = UpdateBalance(Node.Right);
+            INode result = _node.Right.Add(value);
+
+            _node.Right = UpdateBalance(_node.Right);
             
             return result;
         }
 
         private INode UpdateBalance(INode node)
         {
-            return  (node as IBalancing).Balance();
+            return ((IBalancing)node).Balance();
         }
     }
 }

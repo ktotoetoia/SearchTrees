@@ -3,12 +3,6 @@
     public interface INode : ILeftRightPointer , IHasValue
     {
         /// <summary>
-        /// create node of this class
-        /// </summary>
-        /// <returns>node of this class</returns>
-        public INode InstantCreate(IComparable value);
-
-        /// <summary>
         /// adding node as child of this
         /// </summary>
         /// <returns> added node </returns>

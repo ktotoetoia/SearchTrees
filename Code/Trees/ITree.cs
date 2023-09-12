@@ -1,7 +1,7 @@
 ﻿namespace Trees
 {
     public interface ITree<valueType> : INodeEvents, IHasRoot
-        where valueType : IComparable<valueType>
+        where valueType : IComparable
     {
         /// <summary>
         /// Creates and add node 
@@ -21,9 +21,8 @@
     
     public interface INodeEvents
     {
-        public delegate void NodeDelegate(INode node);
-        public event NodeDelegate OnNodeRemoved;
-        public event NodeDelegate OnNodeAdded;
+        public event Action<INode> OnNodeRemoved;
+        public event Action<INode> OnNodeAdded;
     }
 
     public interface IHasRoot
