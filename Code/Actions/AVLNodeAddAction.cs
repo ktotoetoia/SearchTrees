@@ -1,11 +1,27 @@
 ﻿namespace Trees.Actions
 {
-    public class AVLNodeAddAction : NodeAddAction
+    public class AVLNodeAddAction : INodeAction
     {
-        public AVLNodeAddAction(INode node, INodeFactory nodeFactory) 
-            : base(node, nodeFactory) { }
+        private readonly INodeFactory _nodeFactory;
+        private readonly INode _node;
 
-        protected override INode AddToLeftNode(IComparable value)
+        public AVLNodeAddAction(INode node, INodeFactory nodeFactory) 
+        {
+            _node = node;
+            _nodeFactory = nodeFactory;
+        }
+
+        public INode DoAction(IComparable value)
+        {
+            if (_node.Value.CompareTo(value) >= 0)
+            {
+                return AddToLeftNode(value);
+            }
+
+            return AddToRightNode(value);
+        }
+
+        private INode AddToLeftNode(IComparable value)
         {
             if (_node.Left == null)
             {
@@ -19,7 +35,7 @@
             return result;
         }
 
-        protected override INode AddToRightNode(IComparable value)
+        private INode AddToRightNode(IComparable value)
         {
             if (_node.Right == null)
             {

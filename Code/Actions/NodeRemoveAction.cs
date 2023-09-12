@@ -2,7 +2,7 @@
 {
     public class NodeRemoveAction : INodeAction
     {
-        protected INode _node;
+        private readonly INode _node;
 
         public NodeRemoveAction(INode node)
         {

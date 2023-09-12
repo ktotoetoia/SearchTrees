@@ -45,9 +45,14 @@ namespace Trees
         {
             Value = value;
 
+            InitializeActions();
+        }
+
+        protected virtual void InitializeActions()
+        {
             _nodeFindAction = new NodeFindAction(this);
             _nodeRemoveAction = new NodeRemoveAction(this);
-            _nodeAddAction = new AVLNodeAddAction(this,_nodeFactory);
+            _nodeAddAction = new AVLNodeAddAction(this, _nodeFactory);
             _nodeBalanceAction = new AVLNodeBalanceAction(this);
         }
 
@@ -81,17 +86,17 @@ namespace Trees
             Height = Math.Max(GetHeight(Left), GetHeight(Right)) + 1;
         }
 
-        public virtual INode Add(IComparable value)
+        public INode Add(IComparable value)
         {
             return _nodeAddAction.DoAction(value);
         }
 
-        public virtual INode Remove(IComparable value)
+        public INode Remove(IComparable value)
         {
             return _nodeRemoveAction.DoAction(value);
         }
 
-        public virtual INode Find(IComparable value)
+        public INode Find(IComparable value)
         {
             return _nodeFindAction.DoAction(value);
         }

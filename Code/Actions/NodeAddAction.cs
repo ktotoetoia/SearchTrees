@@ -2,8 +2,8 @@
 {
     public class NodeAddAction : INodeAction
     {
-        protected INodeFactory _nodeFactory;
-        protected INode _node;
+        private readonly INodeFactory _nodeFactory;
+        private readonly INode _node;
 
         public NodeAddAction(INode node, INodeFactory nodeFactory)
         {
@@ -21,7 +21,7 @@
             return AddToRightNode(value);
         }
 
-        protected virtual INode AddToLeftNode(IComparable value)
+        private INode AddToLeftNode(IComparable value)
         {
             if (_node.Left == null)
             {
@@ -33,7 +33,7 @@
             return _node.Left.Add(value);
         }
 
-        protected virtual INode AddToRightNode(IComparable value)
+        private INode AddToRightNode(IComparable value)
         {
             if (_node.Right == null)
             {

@@ -2,7 +2,7 @@
 {
     public class NodeFindAction : INodeAction
     {
-        protected INode _node;
+        private readonly INode _node;
 
         public NodeFindAction(INode node)
         {
