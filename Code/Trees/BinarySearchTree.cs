@@ -25,14 +25,9 @@
 
         private INode AddNode(valueType value)
         {
-            INode addedNode;
+            INode addedNode = Root?.Add(value);
             
-            if (Root != null)
-            {
-                addedNode = Root.Add(value);
-            }
-
-            else
+            if(Root == null)
             {
                 Root = _nodeFactory.Create(value);
                 addedNode = Root;
