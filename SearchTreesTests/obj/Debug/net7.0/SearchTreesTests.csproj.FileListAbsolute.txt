@@ -1,8 +1,5 @@
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\CoverletSourceRootsMapping
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\testhost.dll
-C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Trees.deps.json
-C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Trees.runtimeconfig.json
-C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Trees.exe
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\testhost.exe
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
@@ -89,8 +86,6 @@ C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\zh-
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\zh-Hant\Microsoft.TestPlatform.CrossPlatEngine.resources.dll
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
-C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Trees.dll
-C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Trees.pdb
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\obj\Debug\net7.0\SearchTreesTests.csproj.AssemblyReference.cache
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\obj\Debug\net7.0\SearchTreesTests.GeneratedMSBuildEditorConfig.editorconfig
@@ -103,3 +98,5 @@ C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\obj\Debug\net7.0\ref
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\obj\Debug\net7.0\SearchTreesTests.pdb
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\obj\Debug\net7.0\SearchTreesTests.genruntimeconfig.cache
 C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\obj\Debug\net7.0\ref\SearchTreesTests.dll
+C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\BinaryTrees.dll
+C:\Users\ПК\Documents\GitHub\SearchTrees\SearchTreesTests\bin\Debug\net7.0\BinaryTrees.pdb

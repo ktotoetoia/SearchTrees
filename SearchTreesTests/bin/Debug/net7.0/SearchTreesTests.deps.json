@@ -8,10 +8,10 @@
     ".NETCoreApp,Version=v7.0": {
       "SearchTreesTests/1.0.0": {
         "dependencies": {
+          "Example": "1.0.0",
           "MSTest.TestAdapter": "2.2.10",
           "MSTest.TestFramework": "2.2.10",
           "Microsoft.NET.Test.Sdk": "17.3.2",
-          "Trees": "1.0.0",
           "coverlet.collector": "3.1.2",
           "Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions": "14.0.0.0"
         },
@@ -1128,9 +1128,17 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "Trees/1.0.0": {
+      "BinaryTrees/1.0.0": {
         "runtime": {
-          "Trees.dll": {}
+          "BinaryTrees.dll": {}
+        }
+      },
+      "Example/1.0.0": {
+        "dependencies": {
+          "BinaryTrees": "1.0.0"
+        },
+        "runtime": {
+          "Example.dll": {}
         }
       },
       "Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions/14.0.0.0": {
@@ -1814,7 +1822,12 @@
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
     },
-    "Trees/1.0.0": {
+    "BinaryTrees/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Example/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

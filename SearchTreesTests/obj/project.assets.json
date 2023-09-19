@@ -1902,14 +1902,27 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
-      "Trees/1.0.0": {
+      "BinaryTrees/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "compile": {
-          "bin/placeholder/Trees.dll": {}
+          "bin/placeholder/BinaryTrees.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Trees.dll": {}
+          "bin/placeholder/BinaryTrees.dll": {}
+        }
+      },
+      "Example/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "BinaryTrees": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Example.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Example.dll": {}
         }
       }
     }
@@ -6772,18 +6785,23 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
-    "Trees/1.0.0": {
+    "BinaryTrees/1.0.0": {
       "type": "project",
-      "path": "../Code/Trees.csproj",
-      "msbuildProject": "../Code/Trees.csproj"
+      "path": "../BinaryTrees/BinaryTrees.csproj",
+      "msbuildProject": "../BinaryTrees/BinaryTrees.csproj"
+    },
+    "Example/1.0.0": {
+      "type": "project",
+      "path": "../Code/Example.csproj",
+      "msbuildProject": "../Code/Example.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "Example >= 1.0.0",
       "MSTest.TestAdapter >= 2.2.10",
       "MSTest.TestFramework >= 2.2.10",
       "Microsoft.NET.Test.Sdk >= 17.3.2",
-      "Trees >= 1.0.0",
       "coverlet.collector >= 3.1.2"
     ]
   },
@@ -6814,8 +6832,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Trees.csproj": {
-              "projectPath": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Trees.csproj"
+            "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Example.csproj": {
+              "projectPath": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Example.csproj"
             }
           }
         }

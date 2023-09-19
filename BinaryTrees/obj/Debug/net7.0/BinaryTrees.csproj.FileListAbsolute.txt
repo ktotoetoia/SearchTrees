@@ -1,0 +1,11 @@
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\bin\Debug\net7.0\BinaryTrees.deps.json
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\bin\Debug\net7.0\BinaryTrees.dll
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\bin\Debug\net7.0\BinaryTrees.pdb
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\BinaryTrees.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\BinaryTrees.AssemblyInfoInputs.cache
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\BinaryTrees.AssemblyInfo.cs
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\BinaryTrees.csproj.CoreCompileInputs.cache
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\BinaryTrees.dll
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\refint\BinaryTrees.dll
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\BinaryTrees.pdb
+C:\Users\ПК\Documents\GitHub\SearchTrees\BinaryTrees\obj\Debug\net7.0\ref\BinaryTrees.dll

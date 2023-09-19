@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "BinaryTrees/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/BinaryTrees.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BinaryTrees.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "BinaryTrees/1.0.0": {
+      "type": "project",
+      "path": "../BinaryTrees/BinaryTrees.csproj",
+      "msbuildProject": "../BinaryTrees/BinaryTrees.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "BinaryTrees >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\ПК\\.nuget\\packages\\": {}
@@ -13,9 +32,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Trees.csproj",
-      "projectName": "Trees",
-      "projectPath": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Trees.csproj",
+      "projectUniqueName": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Example.csproj",
+      "projectName": "Example",
+      "projectPath": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\Example.csproj",
       "packagesPath": "C:\\Users\\ПК\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\Code\\obj\\",
       "projectStyle": "PackageReference",
@@ -33,7 +52,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\BinaryTrees\\BinaryTrees.csproj": {
+              "projectPath": "C:\\Users\\ПК\\Documents\\GitHub\\SearchTrees\\BinaryTrees\\BinaryTrees.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
