@@ -19,7 +19,7 @@
             {
                 return _node.Left?.Find(value);
             }
-            
+
             return _node.Right?.Find(value);
         }
     }

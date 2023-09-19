@@ -19,7 +19,7 @@ namespace Trees
 
             _nodeFindAction = new NodeFindAction(this);
             _nodeRemoveAction = new NodeRemoveAction(this);
-            _nodeAddAction = new NodeAddAction(this,_nodeFactory);
+            _nodeAddAction = new NodeAddAction(this, _nodeFactory);
         }
 
         public virtual INode Add(IComparable value)

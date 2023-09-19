@@ -24,8 +24,8 @@
         public virtual INode Add(valueType value)
         {
             INode addedNode = Root?.Add(value);
-            
-            if(Root == null)
+
+            if (Root == null)
             {
                 Root = _nodeFactory.Create(value);
                 addedNode = Root;

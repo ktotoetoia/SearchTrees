@@ -1,6 +1,11 @@
 ﻿namespace Trees
 {
-    public interface INode : ILeftRightPointer , IHasValue
+    public interface IAVLNode : INode, IAVLRotations
+    {
+
+    }
+
+    public interface INode : ILeftRightPointer, IHasValue
     {
         /// <summary>
         /// adding node as child of this
@@ -48,10 +53,5 @@
     {
         public INode Left { get; set; }
         public INode Right { get; set; }
-    }
-
-    public interface IAVLNode : INode, IAVLRotations
-    {
-
     }
 }

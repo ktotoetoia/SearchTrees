@@ -21,7 +21,7 @@ namespace Trees
             set
             {
                 _left = value;
-         
+
                 UpdateHeight();
             }
         }
@@ -35,7 +35,7 @@ namespace Trees
             set
             {
                 _right = value;
-                
+
                 UpdateHeight();
             }
         }

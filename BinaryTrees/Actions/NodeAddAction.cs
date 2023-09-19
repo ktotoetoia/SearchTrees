@@ -26,7 +26,7 @@
             if (_node.Left == null)
             {
                 _node.Left = _nodeFactory.Create(value);
-         
+
                 return _node.Left;
             }
 
@@ -38,7 +38,7 @@
             if (_node.Right == null)
             {
                 _node.Right = _nodeFactory.Create(value);
-                
+
                 return _node.Right;
             }
 

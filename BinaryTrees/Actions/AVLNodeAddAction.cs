@@ -1,13 +1,11 @@
-﻿using System.Xml.Linq;
-
-namespace Trees.Actions
+﻿namespace Trees.Actions
 {
     public class AVLNodeAddAction : INodeAction
     {
         private readonly INodeFactory _nodeFactory;
         private readonly IAVLNode _node;
 
-        public AVLNodeAddAction(IAVLNode node, INodeFactory nodeFactory) 
+        public AVLNodeAddAction(IAVLNode node, INodeFactory nodeFactory)
         {
             _node = node;
             _nodeFactory = nodeFactory;
@@ -33,7 +31,7 @@ namespace Trees.Actions
             INode result = _node.Left.Add(value);
 
             _node.Left = ((IBalancing)_node.Left).Balance();
-            
+
             return result;
         }
 
@@ -47,7 +45,7 @@ namespace Trees.Actions
             INode result = _node.Right.Add(value);
 
             _node.Right = ((IBalancing)_node.Right).Balance();
-            
+
             return result;
         }
     }

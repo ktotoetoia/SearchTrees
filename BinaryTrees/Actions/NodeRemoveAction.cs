@@ -11,7 +11,7 @@
 
         public INode DoAction(IComparable value)
         {
-            if (!RecursiveRemove(value)) 
+            if (!RecursiveRemove(value))
             {
                 if (_node.Left == null || _node.Right == null)
                 {
@@ -28,7 +28,7 @@
 
         private bool RecursiveRemove(IComparable value)
         {
-            if(_node.Value.CompareTo(value) == 0)
+            if (_node.Value.CompareTo(value) == 0)
             {
                 return false;
             }
@@ -47,7 +47,7 @@
         private void RemoveLeftNode()
         {
             INode leftMax = GetMax(_node.Left);
-         
+
             _node.Value = leftMax.Value;
             _node.Left = _node.Left.Remove(leftMax.Value);
         }

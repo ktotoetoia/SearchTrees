@@ -22,7 +22,7 @@
                 PrintTreePaths(node.Left);
             }
 
-            if(node.Right != null)
+            if (node.Right != null)
             {
                 Console.WriteLine(node.Value + "<" + node.Right.Value);
                 PrintTreePaths(node.Right);
