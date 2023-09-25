@@ -21,6 +21,6 @@
 
     public interface IHasRoot
     {
-        public INode Root { get; set; }
+        public INode Root { get; }
     }
 }

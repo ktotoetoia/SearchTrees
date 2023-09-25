@@ -7,10 +7,12 @@ namespace Trees
         private INodeFactory _nodeFactory = new AVLNodeFactory();
         private INode _left;
         private INode _right;
-        protected AVLNodeBalanceAction _nodeBalanceAction;
-        protected INodeAction _nodeFindAction;
-        protected INodeAction _nodeRemoveAction;
-        protected INodeAction _nodeAddAction;
+        private IBalanceAction _balanceAction;
+        private IBalanceAction _rightRotate;
+        private IBalanceAction _leftRotate;
+        private INodeAction _findAction;
+        private INodeAction _removeAction;
+        private INodeAction _addAction;
 
         public INode Left
         {
@@ -50,27 +52,29 @@ namespace Trees
             InitializeActions();
         }
 
-        protected virtual void InitializeActions()
+        private void InitializeActions()
         {
-            _nodeFindAction = new NodeFindAction(this);
-            _nodeRemoveAction = new NodeRemoveAction(this);
-            _nodeAddAction = new AVLNodeAddAction(this, _nodeFactory);
-            _nodeBalanceAction = new AVLNodeBalanceAction(this);
+            _findAction = new NodeFindAction(this);
+            _removeAction = new NodeRemoveAction(this);
+            _addAction = new AVLNodeAddAction(this, _nodeFactory);
+            _balanceAction = new AVLNodeBalanceAction(this);
+            _rightRotate = new AVLNodeRightRotateAction(this);
+            _leftRotate = new AVLNodeLeftRotateAction(this);
         }
 
         public INode Balance()
         {
-            return _nodeBalanceAction.Balance();
+            return _balanceAction.DoAction();
         }
 
         public INode RightRotate()
         {
-            return _nodeBalanceAction.RightRotate();
+            return _rightRotate.DoAction();
         }
 
         public INode LeftRotate()
         {
-            return _nodeBalanceAction.LeftRotate();
+            return _leftRotate.DoAction();
         }
 
         public int GetBalance()
@@ -90,17 +94,17 @@ namespace Trees
 
         public INode Add(IComparable value)
         {
-            return _nodeAddAction.DoAction(value);
+            return _addAction.DoAction(value);
         }
 
         public INode Remove(IComparable value)
         {
-            return _nodeRemoveAction.DoAction(value);
+            return _removeAction.DoAction(value);
         }
 
         public INode Find(IComparable value)
         {
-            return _nodeFindAction.DoAction(value);
+            return _findAction.DoAction(value);
         }
     }
 }

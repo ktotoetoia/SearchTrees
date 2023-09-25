@@ -3,9 +3,9 @@
     public class BinarySearchTree<valueType> : ITree<valueType>
         where valueType : IComparable
     {
-        private INodeFactory _nodeFactory;
+        protected readonly INodeFactory _nodeFactory;
 
-        public INode Root { get; set; }
+        public INode Root { get; protected set; }
 
         public BinarySearchTree() : this(new BinaryNodeFactory())
         {

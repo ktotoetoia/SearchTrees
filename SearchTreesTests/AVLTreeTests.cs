@@ -5,7 +5,7 @@
     {
         private AVLTreeFactory factory = new AVLTreeFactory();
         private TreeTests treeTests;
-        
+
         public AVLTreeTests()
         {
             treeTests = new TreeTests(factory);
@@ -29,7 +29,7 @@
             treeTests.NullTests();
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void NodesChildTests()
         {
             ITree<int> tree = factory.CreateTree(3);
@@ -46,17 +46,17 @@
             tree = factory.CreateTree(24);
             TestNodeChilds(tree, 16, 8, 20);
             TestNodeChilds(tree, 8, 4, 12);
-            TestNodeChilds(tree, 12,10, 14);
+            TestNodeChilds(tree, 12, 10, 14);
             TestNodeChilds(tree, 10, 9, 11);
             TestNodeChilds(tree, 14, 13, 15);
             TestNodeChilds(tree, 20, 18, 22);
             TestNodeChilds(tree, 23, -1, 24);
         }
 
-        private void TestNodeChilds(ITree<int> tree,int nodeNum,int leftChild,int rightChild)
+        private void TestNodeChilds(ITree<int> tree, int nodeNum, int leftChild, int rightChild)
         {
             INode node = tree.Find(nodeNum);
-            if(node.Left != null)
+            if (node.Left != null)
             {
                 Assert.AreEqual(node.Left.Value, leftChild);
             }

@@ -3,9 +3,10 @@
     public class AVLTree<valueType> : ITree<valueType>
         where valueType : IComparable
     {
-        private INodeFactory _nodeFactory;
+        protected readonly INodeFactory _nodeFactory;
+        protected IAVLNode _root;
 
-        public INode Root { get; set; }
+        public INode Root { get { return _root; } }
 
         public AVLTree() : this(new AVLNodeFactory())
         {
@@ -21,32 +22,32 @@
         /// adding node and balancing the tree
         /// </summary>
         /// <returns> added node </returns>
-        public INode Add(valueType value)
+        public virtual INode Add(valueType value)
         {
-            INode addedNode;
+            INode nodeToAdd;
 
-            if (Root != null)
+            if (_root != null)
             {
-                addedNode = Root.Add(value);
-                Root = ((IBalancing)Root).Balance();
+                nodeToAdd = Root.Add(value);
+                _root = (IAVLNode)_root.Balance();
             }
             else
             {
-                addedNode = _nodeFactory.Create(value);
-                Root = addedNode;
+                nodeToAdd = _nodeFactory.Create(value);
+                _root = (IAVLNode)nodeToAdd;
             }
 
-            return addedNode;
+            return nodeToAdd;
         }
 
         public INode Remove(valueType value)
         {
-            return Root.Remove(value);
+            return _root.Remove(value);
         }
 
         public INode Find(valueType value)
         {
-            return Root.Find(value);
+            return _root.Find(value);
         }
     }
 }

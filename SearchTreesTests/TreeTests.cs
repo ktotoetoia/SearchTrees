@@ -3,7 +3,7 @@ namespace Trees.Tests
     public class TreeTests
     {
         private ITreeFactory treeFactory;
-        
+
         public TreeTests(ITreeFactory treeFactory)
         {
             this.treeFactory = treeFactory;
